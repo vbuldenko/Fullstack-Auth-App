@@ -25,8 +25,8 @@ const findByToken = (activationToken) => {
   return User.findOne({ where: { activationToken } });
 };
 
-const findById = (userId) => {
-  return User.findOne({ where: { id: userId } });
+const findById = (id) => {
+  return User.findOne({ where: { id } });
 };
 
 const create = async (name, email, password) => {
@@ -67,7 +67,8 @@ const updateName = async (newName, userId) => {
     throw ApiError.Unauthorized();
   }
 
-  await user.update('name', newName);
+  user.name = newName;
+  await user.save();
 
   return user;
 };

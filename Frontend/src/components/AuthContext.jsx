@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { accessTokenService } from "../services/accessTokenService.js";
 import { authService } from "../services/authService.js";
+import { userService } from "../services/userService.js";
 
 export const AuthContext = React.createContext({});
 
@@ -47,12 +48,12 @@ export const AuthProvider = ({ children }) => {
   }
 
   async function change(user) {
-    await authService.updateInformation(user);
+    await userService.updateName(user);
     setUser(user);
   }
 
   async function changeEmailAuth(user) {
-    await authService.confirmChangeEmail(user);
+    await userService.confirmChangeEmail(user);
     setUser(user);
   }
 

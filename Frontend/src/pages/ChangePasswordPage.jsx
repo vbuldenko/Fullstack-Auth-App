@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import cn from "classnames";
 import { authService } from "../services/authService.js";
 import { Link, useParams } from "react-router-dom";
-import { Loader } from "../components/Loader.jsx";
+// import { Loader } from "../components/Loader.jsx";
 
 const validatePassword = (value) => {
   if (!value) {
@@ -17,20 +17,9 @@ const validatePassword = (value) => {
 
 export const ChangePasswordPage = () => {
   const [error, setError] = useState(null);
-  const [done, setDone] = useState(false);
+  // const [done, setDone] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
-
   const { resetToken } = useParams();
-
-  useEffect(() => {
-    authService
-      .validateToken(resetToken)
-      .catch((error) => {
-        setError(error?.response?.data || "Wrong activation link");
-        console.log(error?.response?.data);
-      })
-      .finally(() => setDone(true));
-  }, [resetToken]);
 
   const handleSubmit = (values, formikHelpers) => {
     const { newPassword, newPasswordConfirmation } = values;
@@ -42,7 +31,7 @@ export const ChangePasswordPage = () => {
     }
 
     authService
-      .changePassword({
+      .resetPassword({
         newPassword,
         newPasswordConfirmation,
         resetToken,
@@ -53,17 +42,15 @@ export const ChangePasswordPage = () => {
       });
   };
 
-  if (!done) {
-    return <Loader />;
-  }
+  // if (!done) {
+  //   return <Loader />;
+  // }
 
   if (error) {
     console.log(error);
     return (
       <p className="notification is-danger is-light">
-        {error?.message.includes(
-          "Expired reset token, please request new token"
-        ) ? (
+        {error?.message.includes("Invalid token") ? (
           <>
             Your token is expired, please request a new token on{" "}
             <Link to={"/reset"}>reset page</Link>

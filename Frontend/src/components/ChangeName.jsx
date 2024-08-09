@@ -9,7 +9,7 @@ const ChangeName = () => {
   const [done, setDone] = useState(false);
 
   const handleChangeName = (user) => {
-    setDone(true);
+    // setDone(true);
     return change(user);
   };
 

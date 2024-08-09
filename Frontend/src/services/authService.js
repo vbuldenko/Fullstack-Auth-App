@@ -21,43 +21,14 @@ function refresh() {
 }
 
 function reset({ email }) {
-  return authClient.post("/reset", { email });
+  return authClient.post("/forgotPassword", { email });
 }
 
-function changePassword({ newPassword, newPasswordConfirmation, resetToken }) {
-  return authClient.post(`/changePassword`, {
-    newPassword,
-    newPasswordConfirmation,
-    resetToken,
+function resetPassword({ newPassword, newPasswordConfirmation, resetToken }) {
+  return authClient.post(`/resetPassword/${resetToken}`, {
+    password: newPassword,
+    passwordConfirm: newPasswordConfirmation,
   });
-}
-
-function validateToken(resetToken) {
-  return authClient.get(`/reset/${resetToken}`);
-}
-
-function updateInformation(user) {
-  return authClient.patch(`/update`, user);
-}
-
-function changeAuthPassword({
-  id,
-  email,
-  oldPassword,
-  newPassword,
-  newPasswordConfirmation,
-}) {
-  return authClient.post("/changeAuthPassword", {
-    id,
-    email,
-    oldPassword,
-    newPassword,
-    newPasswordConfirmation,
-  });
-}
-
-function confirmChangeEmail(user) {
-  return authClient.patch("/confirmChangeEmail", { user });
 }
 
 export const authService = {
@@ -67,9 +38,5 @@ export const authService = {
   activate,
   refresh,
   reset,
-  changePassword,
-  validateToken,
-  updateInformation,
-  changeAuthPassword,
-  confirmChangeEmail,
+  resetPassword,
 };

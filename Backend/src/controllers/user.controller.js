@@ -37,17 +37,19 @@ const updateName = async (req, res) => {
 
   const validationError = validateName(name);
 
+  // console.log('Data-----', validationError);
+
   if (validationError) {
     throw ApiError.BadRequest('Validation error', { name: validationError });
   }
 
-  const user = await userService.updateName(token.userId);
-
-  if (!userData || !token || token.userId !== user.id) {
+  if (!userData || !token) {
     throw ApiError.Unauthorized();
   }
 
-  res.status(200).send(userService.normalize(user));
+  const newUser = await userService.updateName(name, token.userId);
+
+  res.status(200).send(userService.normalize(newUser));
 };
 
 const updateEmail = async (req, res) => {
