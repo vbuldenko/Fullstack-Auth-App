@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+$navbar-breakpoint: 480px !default;
+
+@import "../node_modules/bulma/bulma.sass";
+
+.active {
+  font-weight: bold;
+}
+.personalInformation__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.personalInfo {
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.loader {
+  height: 80px;
+  width: 80px;
+}
+
+.loader-wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formik {
+  &__wrapper {
+    margin: 0 -10px 15px;
+    display: flex;
+    @media (max-width: 767px) {
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+  }
+  &-column {
+    &__half {
+      flex: 0 1 50%;
+      padding: 0 10px;
+      @media (max-width: 767px) {
+        flex: 0 1 100%;
+      }
+    }
+  }
+}
