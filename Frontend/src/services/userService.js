@@ -4,37 +4,21 @@ function getAll() {
   return httpClient.get("/users");
 }
 
-// function update(user) {
-//   return authClient.patch(`/update`, user);
-// }
-
 function updateName(user) {
-  return httpClient.patch(`/users/profile/name`, user);
+  return httpClient.patch("/users/profile/name", user);
 }
 
-function changeAuthPassword({
-  id,
-  email,
-  oldPassword,
-  newPassword,
-  newPasswordConfirmation,
-}) {
-  return httpClient.post("/changeAuthPassword", {
-    id,
-    email,
-    oldPassword,
-    newPassword,
-    newPasswordConfirmation,
-  });
+function updateEmail(user) {
+  return httpClient.patch("/users/profile/email", user);
 }
 
-function confirmChangeEmail(user) {
-  return httpClient.patch("/confirmChangeEmail", { user });
+function updatePassword(user) {
+  return httpClient.patch("/users/profile/password", user);
 }
 
 export const userService = {
   getAll,
   updateName,
-  changeAuthPassword,
-  confirmChangeEmail,
+  updateEmail,
+  updatePassword,
 };

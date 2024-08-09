@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import cn from "classnames";
 import { authService } from "../services/authService.js";
 import { Link, useParams } from "react-router-dom";
-// import { Loader } from "../components/Loader.jsx";
 
 const validatePassword = (value) => {
   if (!value) {
@@ -15,9 +14,8 @@ const validatePassword = (value) => {
   }
 };
 
-export const ChangePasswordPage = () => {
+export const PasswordResetPage = () => {
   const [error, setError] = useState(null);
-  // const [done, setDone] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
   const { resetToken } = useParams();
 
@@ -42,10 +40,6 @@ export const ChangePasswordPage = () => {
       });
   };
 
-  // if (!done) {
-  //   return <Loader />;
-  // }
-
   if (error) {
     console.log(error);
     return (
@@ -65,7 +59,7 @@ export const ChangePasswordPage = () => {
   if (passwordChanged) {
     return (
       <p className="notification is-success is-light">
-        Your password was successfully changed, please visit{" "}
+        Your password was successfully reset, please visit{" "}
         <Link to={"/login"}>login page</Link>
       </p>
     );

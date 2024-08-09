@@ -30,10 +30,9 @@ const validatePassword = (value) => {
 export const ChangeEmailConfirmation = () => {
   const [error, setError] = usePageError("");
   const [done, setDone] = useState(false);
-  const { user, changeEmailAuth } = useContext(AuthContext);
+  const { changeEmail } = useContext(AuthContext);
 
-  const handleSubmit = (values, user, formikHelpers) => {
-    const { id, name } = user;
+  const handleSubmit = (values, formikHelpers) => {
     const { password, email, newEmail } = values;
 
     if (newEmail !== email) {
@@ -42,7 +41,10 @@ export const ChangeEmailConfirmation = () => {
       return;
     }
 
-    return changeEmailAuth({ id, name, email, password }, formikHelpers)
+    return changeEmail(
+      { password, email, emailConfirm: newEmail },
+      formikHelpers
+    )
       .then(() => {
         setDone(true);
       })
@@ -63,7 +65,7 @@ export const ChangeEmailConfirmation = () => {
           }}
           validateOnMount={true}
           onSubmit={(values, formikHelpers) => {
-            handleSubmit(values, user, formikHelpers);
+            handleSubmit(values, formikHelpers);
           }}
         >
           {({ touched, errors, isSubmitting }) => (

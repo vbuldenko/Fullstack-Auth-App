@@ -30,6 +30,7 @@ function validatePassword(value) {
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [error, setError] = usePageError("");
   const { login } = useContext(AuthContext);
@@ -45,7 +46,7 @@ export const LoginPage = () => {
         onSubmit={({ email, password }) => {
           return login({ email, password })
             .then(() => {
-              navigate("/profile");
+              navigate(location.state?.from?.pathname || "/profile");
             })
             .catch((error) => {
               setError(error.response?.data?.message);

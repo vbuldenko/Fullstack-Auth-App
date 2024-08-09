@@ -47,14 +47,14 @@ export const AuthProvider = ({ children }) => {
     await authService.reset();
   }
 
-  async function change(user) {
+  async function changeName(user) {
     await userService.updateName(user);
     setUser(user);
   }
 
-  async function changeEmailAuth(user) {
-    await userService.confirmChangeEmail(user);
-    setUser(user);
+  async function changeEmail(user) {
+    await userService.updateEmail(user);
+    setUser((prev) => ({ ...prev, email: user.email }));
   }
 
   const value = useMemo(
@@ -66,8 +66,8 @@ export const AuthProvider = ({ children }) => {
       login,
       logout,
       reset,
-      change,
-      changeEmailAuth,
+      changeName,
+      changeEmail,
     }),
     [user, isChecked]
   );

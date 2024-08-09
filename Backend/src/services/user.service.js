@@ -51,36 +51,18 @@ const create = async (name, email, password) => {
   await emailService.sendActivationLink(name, email, activationToken);
 };
 
-const updatePassword = async (userId, newPassword) => {
+const update = async (data, userId) => {
   const user = await User.findByPk(userId);
 
-  const hashedPassword = await hashPassword(newPassword);
-
-  user.password = hashedPassword;
-  await user.save();
-};
-
-const updateName = async (newName, userId) => {
-  const user = await findById(userId);
-
   if (!user) {
-    throw ApiError.Unauthorized();
+    throw ApiError.NotFound();
   }
 
-  user.name = newName;
-  await user.save();
-
-  return user;
-};
-
-const updateEmail = async (newEmail, userId) => {
-  const user = await findById(userId);
-
-  if (!user) {
-    throw ApiError.Unauthorized();
+  if (data.password) {
+    data.password = await hashPassword(data.password);
   }
 
-  await user.update('email', newEmail);
+  await user.update(data);
 
   return user;
 };
@@ -92,7 +74,5 @@ module.exports = {
   findById,
   findByToken,
   create,
-  updateName,
-  updateEmail,
-  updatePassword,
+  update,
 };

@@ -4,7 +4,7 @@ import { Loader } from "../components/Loader";
 import ChangeName from "../components/ChangeName";
 import { ChangePassword } from "../components/ChangePassword";
 import "./../styles.scss";
-import { ChangeEmailConfirmation } from "../components/ChangeEmailConfirmation";
+import { ChangeEmailConfirmation } from "../components/ChangeEmail";
 
 export const ProfilePage = () => {
   const { user } = useContext(AuthContext);

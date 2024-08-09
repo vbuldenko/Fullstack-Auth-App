@@ -108,7 +108,7 @@ const refresh = async (req, res) => {
     throw ApiError.Unauthorized();
   }
 
-  const user = await userService.findByEmail(userData.email);
+  const user = await userService.findById(userData.id);
 
   if (!user || token.userId !== user.id) {
     res.clearCookie('refreshToken');

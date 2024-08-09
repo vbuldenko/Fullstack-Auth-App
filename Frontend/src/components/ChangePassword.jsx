@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import cn from "classnames";
 
 import { usePageError } from "../hooks/usePageError.js";
-import { authService } from "../services/authService.js";
-import { AuthContext } from "./AuthContext.jsx";
+import { userService } from "../services/userService.js";
 
 const validatePassword = (value) => {
   if (!value) {
@@ -19,8 +18,6 @@ const validatePassword = (value) => {
 export const ChangePassword = () => {
   const [error, setError] = usePageError("");
   const [done, setDone] = useState(true);
-  const { user } = useContext(AuthContext);
-  const { id, email } = user;
 
   const handleSubmit = (values, formikHelpers) => {
     const { newPassword, newPasswordConfirmation, oldPassword } = values;
@@ -31,13 +28,11 @@ export const ChangePassword = () => {
       return;
     }
 
-    authService
-      .changeAuthPassword({
-        id,
-        email,
+    userService
+      .updatePassword({
         oldPassword,
         newPassword,
-        newPasswordConfirmation,
+        confirmation: newPasswordConfirmation,
       })
       .then(() => {
         setDone(false);
@@ -47,7 +42,7 @@ export const ChangePassword = () => {
         formikHelpers.setSubmitting(false);
       });
   };
-  console.log(user);
+
   return (
     <>
       {done ? (

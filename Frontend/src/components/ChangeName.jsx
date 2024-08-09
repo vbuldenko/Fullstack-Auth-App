@@ -4,13 +4,13 @@ import cn from "classnames";
 import { AuthContext } from "./AuthContext";
 
 const ChangeName = () => {
-  const { user, change } = useContext(AuthContext);
+  const { user, changeName } = useContext(AuthContext);
   const { name, email } = user;
   const [done, setDone] = useState(false);
 
   const handleChangeName = (user) => {
-    // setDone(true);
-    return change(user);
+    setDone(true);
+    return changeName(user);
   };
 
   const validateName = (value) => {
@@ -36,9 +36,7 @@ const ChangeName = () => {
                 name: "",
               }}
               validateOnMount={true}
-              onSubmit={(values) =>
-                handleChangeName({ ...user, name: values.name })
-              }
+              onSubmit={(values) => handleChangeName({ ...user, ...values })}
             >
               {({ touched, errors, isSubmitting }) => (
                 <Form>

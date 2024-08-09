@@ -14,7 +14,7 @@ import { Loader } from "./components/Loader.jsx";
 import { HomePage } from "./pages/HomePage.jsx";
 import { usePageError } from "./hooks/usePageError.js";
 import { ResetPage } from "./pages/Reset.jsx";
-import { ChangePasswordPage } from "./pages/ChangePasswordPage.jsx";
+import { PasswordResetPage } from "./pages/PasswordResetPage.jsx";
 import { ProfilePage } from "./pages/ProfilePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
@@ -116,7 +116,7 @@ function App() {
             </Route>
             <Route
               path="reset/:resetToken"
-              element={<ChangePasswordPage />}
+              element={<PasswordResetPage />}
             ></Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
