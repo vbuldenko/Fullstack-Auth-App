@@ -1,11 +1,10 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import cn from "classnames";
-import { AuthContext } from "./AuthContext";
+import { useAuthContext } from "./AuthContext";
 
 const ChangeName = () => {
-  const { user, changeName } = useContext(AuthContext);
-  const { name, email } = user;
+  const { user, changeName } = useAuthContext();
   const [done, setDone] = useState(false);
 
   const handleChangeName = (user) => {
@@ -22,10 +21,10 @@ const ChangeName = () => {
     <>
       <div className="personalInformation box personalInformation__wrapper">
         <p>
-          Your name is: <b>{name}</b>
+          Your name is: <b>{user.name}</b>
         </p>
         <p>
-          Your email is: <b>{email}</b>{" "}
+          Your email is: <b>{user.email}</b>{" "}
         </p>
       </div>
       {!done ? (

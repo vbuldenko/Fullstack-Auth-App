@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { accessTokenService } from "../services/accessTokenService.js";
 import { authService } from "../services/authService.js";
 import { userService } from "../services/userService.js";
@@ -74,3 +74,5 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+export const useAuthContext = () => useContext(AuthContext);

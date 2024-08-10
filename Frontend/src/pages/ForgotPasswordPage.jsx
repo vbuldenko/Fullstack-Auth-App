@@ -18,7 +18,7 @@ function validateEmail(value) {
   }
 }
 
-export const ResetPage = () => {
+export const ForgotPasswordPage = () => {
   const [error, setError] = usePageError("");
   const location = useLocation();
   const [visibleForm, setVisibleForm] = useState(true);

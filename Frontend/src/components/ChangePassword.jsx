@@ -65,12 +65,21 @@ export const ChangePassword = () => {
                   </label>
 
                   <div className="control has-icons-left has-icons-right">
+                    {/* additional hidden input for accessibility */}
+                    <input
+                      type="text"
+                      name="username"
+                      autoComplete="username"
+                      aria-hidden="true"
+                      style={{ position: "absolute", left: "-9999px" }}
+                    />
                     <Field
                       validate={validatePassword}
                       name="oldPassword"
                       type="password"
                       id="oldPassword"
                       placeholder="*******"
+                      autoComplete="current-password"
                       className={cn("input", {
                         "is-danger": touched.oldPassword && errors.oldPassword,
                       })}
@@ -102,6 +111,7 @@ export const ChangePassword = () => {
                       type="password"
                       id="newPassword"
                       placeholder="*******"
+                      autoComplete="new-password"
                       className={cn("input", {
                         "is-danger": touched.newPassword && errors.newPassword,
                       })}
@@ -132,6 +142,7 @@ export const ChangePassword = () => {
                       type="password"
                       id="newPasswordConfirmation"
                       placeholder="*******"
+                      autoComplete="new-password"
                       className={cn("input", {
                         "is-danger":
                           touched.newPasswordConfirmation &&

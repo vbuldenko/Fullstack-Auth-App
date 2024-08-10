@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import cn from "classnames";
 
 import { usePageError } from "../hooks/usePageError.js";
-import { AuthContext } from "./AuthContext.jsx";
+import { useAuthContext } from "./AuthContext.jsx";
 
 function validateEmail(value) {
   if (!value) {
@@ -27,10 +27,10 @@ const validatePassword = (value) => {
   }
 };
 
-export const ChangeEmailConfirmation = () => {
+export const ChangeEmail = () => {
   const [error, setError] = usePageError("");
   const [done, setDone] = useState(false);
-  const { changeEmail } = useContext(AuthContext);
+  const { changeEmail } = useAuthContext();
 
   const handleSubmit = (values, formikHelpers) => {
     const { password, email, newEmail } = values;
@@ -78,12 +78,21 @@ export const ChangeEmailConfirmation = () => {
                   </label>
 
                   <div className="control has-icons-left has-icons-right">
+                    {/* additional hidden input for accessibility */}
+                    <input
+                      type="text"
+                      name="username"
+                      autoComplete="username"
+                      aria-hidden="true"
+                      style={{ position: "absolute", left: "-9999px" }}
+                    />
                     <Field
                       name="password"
                       validate={validatePassword}
                       type="password"
                       id="password"
                       placeholder="******"
+                      autoComplete="current-password"
                       className={cn("input", {
                         "is-danger": touched.password && errors.password,
                       })}
