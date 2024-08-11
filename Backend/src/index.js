@@ -8,6 +8,9 @@ const userRouter = require('./routes/user.route');
 const authRouter = require('./routes/auth.route');
 const { unknownEndpoint } = require('./middlewares/helper.middleware');
 const { authMiddleware } = require('./middlewares/auth.middleware');
+const passport = require('passport');
+
+require('./services/passport'); // Import the passport configuration
 
 require('dotenv').config();
 
@@ -21,6 +24,9 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(passport.initialize());
+
 app.use('/', authRouter);
 app.use('/users', authMiddleware, userRouter);
 app.use(unknownEndpoint);

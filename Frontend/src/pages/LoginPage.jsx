@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import cn from "classnames";
 
-import { AuthContext } from "../components/AuthContext.jsx";
+import { useAuthContext } from "../components/AuthContext.jsx";
 import { usePageError } from "../hooks/usePageError.js";
+import { authService } from "../services/authService.js";
 
 function validateEmail(value) {
   if (!value) {
@@ -33,7 +34,7 @@ export const LoginPage = () => {
   const location = useLocation();
 
   const [error, setError] = usePageError("");
-  const { login } = useContext(AuthContext);
+  const { login } = useAuthContext();
 
   return (
     <>
@@ -62,12 +63,14 @@ export const LoginPage = () => {
               </label>
 
               <div className="control has-icons-left has-icons-right">
+                {/* autocomplete for accessibility suggested by browser */}
                 <Field
                   validate={validateEmail}
                   name="email"
                   type="email"
                   id="email"
                   placeholder="e.g. bobsmith@gmail.com"
+                  autoComplete="username"
                   className={cn("input", {
                     "is-danger": touched.email && errors.email,
                   })}
@@ -100,6 +103,7 @@ export const LoginPage = () => {
                   type="password"
                   id="password"
                   placeholder="*******"
+                  autoComplete="current-password"
                   className={cn("input", {
                     "is-danger": touched.password && errors.password,
                   })}
@@ -132,6 +136,14 @@ export const LoginPage = () => {
               >
                 Log in
               </button>
+            </div>
+            <div className="field">
+              <span
+                className="button google"
+                onClick={() => authService.loginGoogle()}
+              >
+                Sign in with Google
+              </span>
             </div>
             Forgot your password?{" "}
             <Link state={{ email: values.email }} to="/reset">

@@ -7,6 +7,9 @@ function register({ name, email, password }) {
 function login({ name, email, password }) {
   return authClient.post("/login", { name, email, password });
 }
+function loginGoogle() {
+  return authClient.get("/auth/google");
+}
 
 function logout() {
   return authClient.post("/logout");
@@ -34,6 +37,7 @@ function resetPassword({ newPassword, newPasswordConfirmation, resetToken }) {
 export const authService = {
   register,
   login,
+  loginGoogle,
   logout,
   activate,
   refresh,
