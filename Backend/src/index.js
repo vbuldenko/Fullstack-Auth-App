@@ -3,16 +3,14 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+require('dotenv').config();
+const { passport } = require('./services/passport'); // Import the passport configuration
+
 const { errorMiddleware } = require('./middlewares/error.middleware');
 const userRouter = require('./routes/user.route');
 const authRouter = require('./routes/auth.route');
 const { unknownEndpoint } = require('./middlewares/helper.middleware');
 const { authMiddleware } = require('./middlewares/auth.middleware');
-const passport = require('passport');
-
-require('./services/passport'); // Import the passport configuration
-
-require('dotenv').config();
 
 const app = express();
 

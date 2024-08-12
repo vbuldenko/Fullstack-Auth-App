@@ -71,14 +71,13 @@ const findOrCreateGoogleUser = async (profile) => {
   let user = await User.findOne({ where: { email: profile.emails[0].value } });
 
   if (!user) {
-    const hash = await hashPassword('password123');
+    const hash = await hashPassword('defaultpassword');
 
     user = await User.create({
       email: profile.emails[0].value,
       name: profile.displayName,
       password: hash,
       activationToken: null,
-      // other fields as needed
     });
   }
 

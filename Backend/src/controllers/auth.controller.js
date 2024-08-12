@@ -1,4 +1,3 @@
-const passport = require('passport');
 const { ApiError } = require('../exceptions/api.error');
 const userService = require('../services/user.service');
 const jwtService = require('../services/jwt.service');
@@ -11,6 +10,7 @@ const {
   comparePasswords,
 } = require('../utils');
 // const { Path } = require('../constants/RoutePath');
+require('dotenv').config();
 
 const sendAuthentication = async (res, user) => {
   const userData = userService.normalize(user);
@@ -197,21 +197,17 @@ const resetPassword = async (req, res) => {
   res.status(200).send({ message: 'password reset successfully' });
 };
 
-const googleAuth = passport.authenticate('google', {
-  scope: ['profile', 'email'],
-});
 const googleAuthCallback = (req, res) => {
-  const accessToken = jwtService.generateAccessToken({ id: req.user.id });
-  const refreshToken = jwtService.generateRefreshToken({ id: req.user.id });
+  const { refreshToken } = req.user;
 
   res.cookie('refreshToken', refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'none',
+    secure: true,
   });
 
-  res.redirect(`/profile?accessToken=${accessToken}`);
+  res.redirect(`${process.env.CLIENT_URL}/profile`);
 };
 
 module.exports = {
@@ -222,6 +218,5 @@ module.exports = {
   logout,
   forgotPassword,
   resetPassword,
-  googleAuth,
   googleAuthCallback,
 };
