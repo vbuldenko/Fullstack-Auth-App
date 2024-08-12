@@ -36,6 +36,11 @@ export const AuthProvider = ({ children }) => {
     setUser(user);
   }
 
+  async function loginFirebaseUser({ user, accessToken }) {
+    accessTokenService.save(accessToken);
+    setUser(user);
+  }
+
   async function logout() {
     await authService.logout();
 
@@ -64,6 +69,7 @@ export const AuthProvider = ({ children }) => {
       checkAuth,
       activate,
       login,
+      loginFirebaseUser,
       logout,
       reset,
       changeName,

@@ -67,15 +67,15 @@ const update = async (data, userId) => {
   return user;
 };
 
-const findOrCreateGoogleUser = async (profile) => {
-  let user = await User.findOne({ where: { email: profile.emails[0].value } });
+const findOrCreateGoogleUser = async ({ name, email }) => {
+  let user = await User.findOne({ where: { email } });
 
   if (!user) {
     const hash = await hashPassword('defaultpassword');
 
     user = await User.create({
-      email: profile.emails[0].value,
-      name: profile.displayName,
+      email,
+      name,
       password: hash,
       activationToken: null,
     });

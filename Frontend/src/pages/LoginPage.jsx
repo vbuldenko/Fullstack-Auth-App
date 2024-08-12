@@ -6,6 +6,7 @@ import cn from "classnames";
 import { useAuthContext } from "../components/AuthContext.jsx";
 import { usePageError } from "../hooks/usePageError.js";
 import { authService } from "../services/authService.js";
+import GoogleSignIn from "../components/GoogleSignIn.jsx";
 
 function validateEmail(value) {
   if (!value) {
@@ -152,6 +153,8 @@ export const LoginPage = () => {
           </Form>
         )}
       </Formik>
+
+      <GoogleSignIn />
 
       {error && <p className="notification is-danger is-light">{error}</p>}
     </>
