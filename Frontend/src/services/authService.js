@@ -8,7 +8,7 @@ function login({ name, email, password }) {
   return authClient.post("/login", { name, email, password });
 }
 function loginGoogle() {
-  return authClient.get("/auth/google");
+  window.open(`${process.env.REACT_APP_API_URL}/auth/google`, "_self");
 }
 
 function logout() {
