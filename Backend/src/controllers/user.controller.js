@@ -1,6 +1,5 @@
 const { ApiError } = require('../exceptions/api.error');
 const emailService = require('../services/email.service');
-const jwtService = require('../services/jwt.service');
 const tokenService = require('../services/token.service');
 const userService = require('../services/user.service');
 const {
@@ -18,7 +17,7 @@ const getAllActive = async (req, res) => {
 
 const getProfile = async (req, res) => {
   const refreshToken = req.cookies?.refreshToken || '';
-  const userData = await jwtService.validateRefreshToken(refreshToken);
+  const userData = await tokenService.validateRefreshToken(refreshToken);
   const token = await tokenService.getByToken(refreshToken);
 
   if (!userData || !token) {
@@ -37,7 +36,7 @@ const getProfile = async (req, res) => {
 const updateName = async (req, res) => {
   const { name } = req.body;
   const refreshToken = req.cookies?.refreshToken || '';
-  const userData = await jwtService.validateRefreshToken(refreshToken);
+  const userData = await tokenService.validateRefreshToken(refreshToken);
   const token = await tokenService.getByToken(refreshToken);
 
   const validationError = validateName(name);
@@ -75,7 +74,7 @@ const updateEmail = async (req, res) => {
     });
   }
 
-  const userData = jwtService.validateRefreshToken(refreshToken);
+  const userData = tokenService.validateRefreshToken(refreshToken);
 
   if (!userData) {
     throw ApiError.Unauthorized();
@@ -123,7 +122,7 @@ const updatePassword = async (req, res) => {
     });
   }
 
-  const userData = jwtService.validateRefreshToken(refreshToken);
+  const userData = tokenService.validateRefreshToken(refreshToken);
 
   if (!userData) {
     throw ApiError.Unauthorized();

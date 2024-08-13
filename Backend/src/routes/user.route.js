@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const userController = require('../controllers/user.controller');
 const { catchError } = require('../utils/catchError');
-const { Path } = require('../constants/RoutePath');
+const { Path } = require('../configs/RoutePath');
 
 router.get(Path.users, catchError(userController.getAllActive));
 router.get(Path.profile, catchError(userController.getProfile));

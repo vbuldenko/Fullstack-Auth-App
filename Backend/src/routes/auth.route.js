@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const authController = require('../controllers/auth.controller');
 const { catchError } = require('../utils/catchError');
-const { Path } = require('../constants/RoutePath');
+const { Path } = require('../configs/RoutePath');
 const passport = require('passport');
 
 router.post(Path.signup, catchError(authController.register));

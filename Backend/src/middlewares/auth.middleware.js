@@ -1,5 +1,5 @@
 const { ApiError } = require('../exceptions/api.error');
-const jwtService = require('../services/jwt.service');
+const tokenService = require('../services/token.service');
 
 function authMiddleware(req, res, next) {
   const authHeader = req.headers['authorization'] || '';
@@ -9,7 +9,7 @@ function authMiddleware(req, res, next) {
     throw ApiError.Unauthorized();
   }
 
-  const userData = jwtService.validateAccessToken(accessToken);
+  const userData = tokenService.validateAccessToken(accessToken);
 
   if (!userData) {
     throw ApiError.Unauthorized();

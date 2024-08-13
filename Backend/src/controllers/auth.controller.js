@@ -1,6 +1,5 @@
 const { ApiError } = require('../exceptions/api.error');
 const userService = require('../services/user.service');
-const jwtService = require('../services/jwt.service');
 const tokenService = require('../services/token.service');
 const emailService = require('../services/email.service');
 const {
@@ -13,11 +12,8 @@ const {
 require('dotenv').config();
 
 const sendAuthentication = async (res, user) => {
-  const userData = userService.normalize(user);
-  const accessToken = jwtService.generateAccessToken(userData);
-  const refreshToken = jwtService.generateRefreshToken(userData);
-
-  await tokenService.save(user.id, refreshToken);
+  const { accessToken, refreshToken, userData } =
+    await tokenService.generateTokensData(user);
 
   res.cookie('refreshToken', refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -102,7 +98,7 @@ const login = async (req, res) => {
 
 const refresh = async (req, res) => {
   const refreshToken = req.cookies?.refreshToken || '';
-  const userData = await jwtService.validateRefreshToken(refreshToken);
+  const userData = await tokenService.validateRefreshToken(refreshToken);
   const token = await tokenService.getByToken(refreshToken);
 
   if (!userData || !token) {
@@ -121,7 +117,7 @@ const refresh = async (req, res) => {
 
 const logout = async (req, res) => {
   const refreshToken = req.cookies?.refreshToken || '';
-  const userData = jwtService.validateRefreshToken(refreshToken);
+  const userData = tokenService.validateRefreshToken(refreshToken);
 
   if (!userData || !refreshToken) {
     throw ApiError.Unauthorized();
@@ -145,7 +141,7 @@ const forgotPassword = async (req, res) => {
   }
 
   const userData = userService.normalize(user);
-  const resetToken = jwtService.generateResetToken(userData);
+  const resetToken = tokenService.generateResetToken(userData);
 
   await emailService.sendResetLink(user.name, user.email, resetToken);
 
@@ -174,7 +170,7 @@ const resetPassword = async (req, res) => {
     });
   }
 
-  const userData = await jwtService.validateResetToken(resetToken);
+  const userData = await tokenService.validateResetToken(resetToken);
 
   if (!userData) {
     throw ApiError.BadRequest('Invalid token', {
