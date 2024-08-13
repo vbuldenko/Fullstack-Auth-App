@@ -8,7 +8,7 @@ const {
   validatePassword,
   comparePasswords,
 } = require('../utils');
-const { admin } = require('../services/firebase');
+const { admin } = require('../configs/firebase');
 
 // const { Path } = require('../constants/RoutePath');
 require('dotenv').config();
