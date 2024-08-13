@@ -8,6 +8,8 @@ const {
   validatePassword,
   comparePasswords,
 } = require('../utils');
+const { admin } = require('../services/firebase');
+
 // const { Path } = require('../constants/RoutePath');
 require('dotenv').config();
 
@@ -206,6 +208,16 @@ const googleAuthCallback = (req, res) => {
   res.redirect(`${process.env.CLIENT_URL}/profile`);
 };
 
+const googleAuthFireBase = async (req, res) => {
+  const { idToken } = req.body;
+
+  const decodedToken = await admin.auth().verifyIdToken(idToken);
+
+  const user = await userService.findOrCreateGoogleUser(decodedToken);
+
+  await sendAuthentication(res, user);
+};
+
 module.exports = {
   register,
   activate,
@@ -215,4 +227,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   googleAuthCallback,
+  googleAuthFireBase,
 };

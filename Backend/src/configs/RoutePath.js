@@ -1,4 +1,5 @@
 const Path = {
+  googleLoginFireBase: '/api/auth/google',
   googleLogin: '/auth/google',
   googleLoginCB: '/auth/google/callback',
   signup: '/registration',

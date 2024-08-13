@@ -3,8 +3,10 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
 require('dotenv').config();
-const { passport } = require('./services/passport'); // Import the passport configuration
+
+const { passport } = require('./services/passport');
 
 const { errorMiddleware } = require('./middlewares/error.middleware');
 const userRouter = require('./routes/user.route');

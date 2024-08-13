@@ -8,7 +8,7 @@ passport.use(new GoogleStrategy(GOOGLE_AUTH_OPTIONS, processingCallback));
 
 async function processingCallback(accessToken, refreshToken, profile, done) {
   try {
-    const user = await userService.findOrCreateGoogleUser(profile);
+    const user = await userService.findOrCreateGoogleUser(profile._json);
     const tokens = await tokenService.generateTokensData(user);
 
     return done(null, {
@@ -21,7 +21,7 @@ async function processingCallback(accessToken, refreshToken, profile, done) {
   }
 }
 
-//Used with session
+// Used with session
 // passport.serializeUser((user, done) => {
 //   done(null, user);
 // });

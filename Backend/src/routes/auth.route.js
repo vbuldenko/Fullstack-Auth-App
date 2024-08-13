@@ -8,12 +8,18 @@ router.post(Path.signup, catchError(authController.register));
 router.get(Path.activate, catchError(authController.activate));
 router.post(Path.login, catchError(authController.login));
 
+router.post(
+  Path.googleLoginFireBase,
+  catchError(authController.googleAuthFireBase),
+);
+
 router.get(
   Path.googleLogin,
   passport.authenticate('google', {
     scope: ['profile', 'email'],
   }),
 );
+
 router.get(
   Path.googleLoginCB,
   passport.authenticate('google', {
